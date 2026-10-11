@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+ <respiratory>
+ </respiratory>└── website
+     └── index.html
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GeoMeasure</title>
+
+    <style>
+
+        /* =========================================
+           GENERAL DESIGN
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f3ff;
+            color: #222;
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            background: linear-gradient(135deg, #5b20d6, #8b5cf6);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        header h1 {
+            font-size: 42px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #ffe66d;
+        }
+
+
+        /* =========================================
+           SECTIONS
+        ========================================= */
+
+        section {
+            width: 92%;
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        section h2 {
+            color: #5b20d6;
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================================
+           HOME
+        ========================================= */
+
+        #home {
+            text-align: center;
+        }
+
+        #home p {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        #home ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        #home li {
+            background: #f0ebff;
+            margin: 10px auto;
+            padding: 12px;
+            border-radius: 10px;
+            max-width: 500px;
+        }
+
+
+        /* =========================================
+           LESSONS
+        ========================================= */
+
+        .lesson {
+            background: #f8f6ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border-left: 6px solid #6c4bc4;
+        }
+
+        .lesson h3 {
+            color: #4d3299;
+            margin-bottom: 10px;
+        }
+
+
+        /* =========================================
+           BUTTONS
+        ========================================= */
+
+        button {
+            background: #6c4bc4;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #4d3299;
+        }
+
+
+        /* =========================================
+           FORMULA TABLE
+        ========================================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #6c4bc4;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 13px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f7f4ff;
+        }
+
+
+        /* =========================================
+           ACTIVITIES
+        ========================================= */
+
+        .activity-card {
+            background: #f8f6ff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+        }
+
+        .activity-card h3 {
+            color: #5b20d6;
+        }
+
+
+        /* =========================================
+           QUIZ
+        ========================================= */
+
+        .quiz-container {
+            background: white;
+        }
+
+        .quiz-instructions {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            background: #f7f4ff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border-left: 6px solid #6c4bc4;
+        }
+
+        .question h3 {
+            color: #4d3299;
+            margin-bottom: 15px;
+        }
+
+        .choice {
+            display: block;
+            background: white;
+            padding: 11px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .choice:hover {
+            background: #eee8ff;
+        }
+
+        .choice input {
+            margin-right: 10px;
+        }
+
+
+        /* =========================================
+           RESULT
+        ========================================= */
+
+        #result {
+            margin-top: 25px;
+            padding: 25px;
+            background: #eee8ff;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .wrong-number {
+            display: inline-block;
+            background: #f04450;
+            color: white;
+            padding: 8px 14px;
+            margin: 5px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+
+        /* =========================================
+           RETAKE
+        ========================================= */
+
+        #retakeSection {
+            margin-top: 30px;
+            background: #fff;
+        }
+
+        #retakeSection h2 {
+            color: #5b20d6;
+        }
+
+        .retake-question {
+            background: #fff4f4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border-left: 6px solid #f04450;
+        }
+
+        #retakeResult {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f0ebff;
+            text-align: center;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            background: #3f267c;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            header h1 {
+                font-size: 32px;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 6px;
+            }
+
+            section {
+                width: 95%;
+                padding: 22px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header>
+
+        <h1>📐 GeoMeasure</h1>
+
+        <p>Interactive Geometry and Measurement</p>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#lessons">Lessons</a>
+            <a href="#formulas">Formulas</a>
+            <a href="#activities">Activities</a>
+            <a href="#quiz">Quiz</a>
+            <a href="#about">About</a>
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
+         HOME
+    ========================================= -->
+
+    <section id="home">
+
+        <h2>Welcome to GeoMeasure! 👋</h2>
+
+        <p>
+            Welcome to GeoMeasure, an interactive learning website
+            designed to help students understand Geometry and Measurement
+            through simple explanations, formulas, examples, and activities.
+        </p>
+
+        <h3 style="margin-top: 25px;">
+            What can you learn?
+        </h3>
+
+        <ul>
+            <li>📦 Solids and Nets</li>
+            <li>📏 Measurement</li>
+            <li>🚗 Speed, Distance, and Time</li>
+            <li>📐 Composite Area</li>
+            <li>🔲 Surface Area</li>
+            <li>🥧 Pie Graphs</li>
+        </ul>
+
+    </section>
+
+
+
+    <!-- =========================================
+         LESSONS
+    ========================================= -->
+
+    <section id="lessons">
+
+        <h2>📚 Lessons</h2>
+
+
+        <div class="lesson">
+
+            <h3>1. Solids and Nets</h3>
+
+            <p>
+                A solid is a three-dimensional object that has length,
+                width, and height. A net is a flat pattern that can be
+                folded to form a solid.
+            </p>
+
+            <button>
+                🔊 Listen
+            </button>
+
+        </div>
+
+
+        <div class="lesson">
+
+            <h3>2. Speed, Distance, and Time</h3>
+
+            <p>
+                Speed tells us how fast an object moves over a certain
+                distance and amount of time.
+            </p>
+
+            <button>
+                🔊 Listen
+            </button>
+
+        </div>
+
+
+        <div class="lesson">
+
+            <h3>3. Composite Area</h3>
+
+            <p>
+                A composite figure is a shape made up of two or more
+                simple geometric shapes.
+            </p>
+
+            <button>
+                🔊 Listen
+            </button>
+
+        </div>
+
+
+        <div class="lesson">
+
+            <h3>4. Surface Area</h3>
+
+            <p>
+                Surface area is the total area of all the surfaces
+                of a three-dimensional object.
+            </p>
+
+            <button>
+                🔊 Listen
+            </button>
+
+        </div>
+
+
+        <div class="lesson">
+
+            <h3>5. Pie Graph</h3>
+
+            <p>
+                A pie graph represents data using sections of a circle.
+                Each section represents a part of the whole.
+            </p>
+
+            <button>
+                🔊 Listen
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         FORMULAS
+    ========================================= -->
+
+    <section id="formulas">
+
+        <h2>🧮 Formula Guide</h2>
+
+        <table>
+
+            <tr>
+                <th>Topic</th>
+                <th>Formula</th>
+            </tr>
+
+            <tr>
+                <td>Rectangle Area</td>
+                <td>A = l × w</td>
+            </tr>
+
+            <tr>
+                <td>Triangle Area</td>
+                <td>A = ½ × b × h</td>
+            </tr>
+
+            <tr>
+                <td>Circle Area</td>
+                <td>A = πr²</td>
+            </tr>
+
+            <tr>
+                <td>Rectangular Prism Volume</td>
+                <td>V = l × w × h</td>
+            </tr>
+
+            <tr>
+                <td>Speed</td>
+                <td>S = d ÷ t</td>
+            </tr>
+
+            <tr>
+                <td>Distance</td>
+                <td>d = S × t</td>
+            </tr>
+
+            <tr>
+                <td>Time</td>
+                <td>t = d ÷ S</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+
+    <!-- =========================================
+         ACTIVITIES
+    ========================================= -->
+
+    <section id="activities">
+
+        <h2>🎮 Interactive Activities</h2>
+
+
+        <div class="activity-card">
+
+            <h3>Activity 1: Formula Match</h3>
+
+            <p>
+                Match the correct formula with the given problem.
+            </p>
+
+            <button>
+                Start Activity
+            </button>
+
+        </div>
+
+
+        <div class="activity-card">
+
+            <h3>Activity 2: Geometry Challenge</h3>
+
+            <p>
+                Test your knowledge of Geometry and Measurement.
+            </p>
+
+            <button>
+                Start Challenge
+            </button>
+
+        </div>
+
+
+        <div class="activity-card">
+
+            <h3>Activity 3: Shape Identifier</h3>
+
+            <p>
+                Identify the geometric shape shown.
+            </p>
+
+            <button>
+                Start Activity
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         QUIZ
+    ========================================= -->
+
+    <section id="quiz">
+
+        <div class="quiz-container">
+
+            <h2>📝 GeoMeasure Quiz</h2>
+
+            <p class="quiz-instructions">
+
+                Answer all 10 questions.
+                If you get some questions wrong,
+                you can retake only those questions at the end.
+
+            </p>
+
+
+            <form id="quizForm">
+
+
+                <!-- QUESTION 1 -->
+
+                <div class="question">
+
+                    <h3>
+                        1. What is the area of a rectangle with a
+                        length of 8 cm and a width of 5 cm?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q1" value="A">
+                        A. 13 cm²
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q1" value="B">
+                        B. 40 cm²
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q1" value="C">
+                        C. 26 cm²
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q1" value="D">
+                        D. 80 cm²
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 2 -->
+
+                <div class="question">
+
+                    <h3>
+                        2. What is the formula for the area of a triangle?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q2" value="A">
+                        A. A = l × w
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q2" value="B">
+                        B. A = ½bh
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q2" value="C">
+                        C. A = πr²
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q2" value="D">
+                        D. A = 2πr
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 3 -->
+
+                <div class="question">
+
+                    <h3>
+                        3. A car travels 120 km in 2 hours.
+                        What is its speed?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q3" value="A">
+                        A. 30 km/h
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q3" value="B">
+                        B. 60 km/h
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q3" value="C">
+                        C. 120 km/h
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q3" value="D">
+                        D. 240 km/h
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 4 -->
+
+                <div class="question">
+
+                    <h3>
+                        4. Which of the following is a three-dimensional figure?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q4" value="A">
+                        A. Square
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q4" value="B">
+                        B. Triangle
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q4" value="C">
+                        C. Circle
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q4" value="D">
+                        D. Cube
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 5 -->
+
+                <div class="question">
+
+                    <h3>
+                        5. What does the surface area of a solid represent?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q5" value="A">
+                        A. The space inside the solid
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q5" value="B">
+                        B. The total area of its surfaces
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q5" value="C">
+                        C. Its height only
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q5" value="D">
+                        D. Its length only
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 6 -->
+
+                <div class="question">
+
+                    <h3>
+                        6. What is the formula for the area of a circle?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q6" value="A">
+                        A. A = πr²
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q6" value="B">
+                        B. A = l × w
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q6" value="C">
+                        C. A = ½bh
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q6" value="D">
+                        D. A = 2πr
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 7 -->
+
+                <div class="question">
+
+                    <h3>
+                        7. A composite figure is made up of:
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q7" value="A">
+                        A. Only circles
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q7" value="B">
+                        B. Two or more simple geometric shapes
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q7" value="C">
+                        C. Only triangles
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q7" value="D">
+                        D. Only squares
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 8 -->
+
+                <div class="question">
+
+                    <h3>
+                        8. What is the distance formula when
+                        speed and time are known?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q8" value="A">
+                        A. d = S × t
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q8" value="B">
+                        B. d = S ÷ t
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q8" value="C">
+                        C. d = t ÷ S
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q8" value="D">
+                        D. d = S + t
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 9 -->
+
+                <div class="question">
+
+                    <h3>
+                        9. A pie graph is used to represent:
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q9" value="A">
+                        A. Parts of a whole
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q9" value="B">
+                        B. Only measurements
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q9" value="C">
+                        C. Only distances
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q9" value="D">
+                        D. Only geometric formulas
+                    </label>
+
+                </div>
+
+
+
+                <!-- QUESTION 10 -->
+
+                <div class="question">
+
+                    <h3>
+                        10. What is the volume of a rectangular prism
+                        with length 4 cm, width 3 cm, and height 2 cm?
+                    </h3>
+
+                    <label class="choice">
+                        <input type="radio" name="q10" value="A">
+                        A. 9 cm³
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q10" value="B">
+                        B. 12 cm³
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q10" value="C">
+                        C. 24 cm³
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="q10" value="D">
+                        D. 48 cm³
+                    </label>
+
+                </div>
+
+
+
+                <button type="button" onclick="checkQuiz()">
+                    Submit Quiz
+                </button>
+
+            </form>
+
+
+
+            <!-- MAIN RESULT -->
+
+            <div id="result" class="hidden">
+
+                <h2 id="score"></h2>
+
+                <p id="resultMessage"></p>
+
+                <div id="wrongQuestions"></div>
+
+            </div>
+
+
+
+            <!-- RETAKE -->
+
+            <div id="retakeSection" class="hidden">
+
+                <h2>🔄 Retake Your Incorrect Answers</h2>
+
+                <p>
+                    Try the questions you answered incorrectly.
+                </p>
+
+                <form id="retakeForm"></form>
+
+                <button type="button" onclick="checkRetake()">
+                    Submit Retake
+                </button>
+
+                <div id="retakeResult"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         ABOUT
+    ========================================= -->
+
+    <section id="about">
+
+        <h2>ℹ️ About GeoMeasure</h2>
+
+        <p>
+            GeoMeasure is an interactive educational website
+            developed as a supplementary learning resource for
+            Geometry and Measurement.
+        </p>
+
+        <p style="margin-top: 15px;">
+            It provides lessons, formula guides, examples,
+            audio-assisted vocabulary, and interactive activities
+            to support students in learning mathematical concepts.
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+
+        <p>
+            © 2026 GeoMeasure | Interactive Geometry and Measurement
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+
+        /* =========================================
+           CORRECT ANSWERS
+        ========================================= */
+
+        const correctAnswers = {
+
+            q1: "B",
+            q2: "B",
+            q3: "B",
+            q4: "D",
+            q5: "B",
+            q6: "A",
+            q7: "B",
+            q8: "A",
+            q9: "A",
+            q10: "C"
+
+        };
+
+
+
+        /* =========================================
+           QUESTION TEXT
+        ========================================= */
+
+        const questions = {
+
+            q1: "What is the area of a rectangle with a length of 8 cm and a width of 5 cm?",
+
+            q2: "What is the formula for the area of a triangle?",
+
+            q3: "A car travels 120 km in 2 hours. What is its speed?",
+
+            q4: "Which of the following is a three-dimensional figure?",
+
+            q5: "What does the surface area of a solid represent?",
+
+            q6: "What is the formula for the area of a circle?",
+
+            q7: "A composite figure is made up of:",
+
+            q8: "What is the distance formula when speed and time are known?",
+
+            q9: "A pie graph is used to represent:",
+
+            q10: "What is the volume of a rectangular prism with length 4 cm, width 3 cm, and height 2 cm?"
+
+        };
+
+
+
+        /* =========================================
+           CHOICES
+        ========================================= */
+
+        const choices = {
+
+            q1: [
+                "13 cm²",
+                "40 cm²",
+                "26 cm²",
+                "80 cm²"
+            ],
+
+            q2: [
+                "A = l × w",
+                "A = ½bh",
+                "A = πr²",
+                "A = 2πr"
+            ],
+
+            q3: [
+                "30 km/h",
+                "60 km/h",
+                "120 km/h",
+                "240 km/h"
+            ],
+
+            q4: [
+                "Square",
+                "Triangle",
+                "Circle",
+                "Cube"
+            ],
+
+            q5: [
+                "The space inside the solid",
+                "The total area of its surfaces",
+                "Its height only",
+                "Its length only"
+            ],
+
+            q6: [
+                "A = πr²",
+                "A = l × w",
+                "A = ½bh",
+                "A = 2πr"
+            ],
+
+            q7: [
+                "Only circles",
+                "Two or more simple geometric shapes",
+                "Only triangles",
+                "Only squares"
+            ],
+
+            q8: [
+                "d = S × t",
+                "d = S ÷ t",
+                "d = t ÷ S",
+                "d = S + t"
+            ],
+
+            q9: [
+                "Parts of a whole",
+                "Only measurements",
+                "Only distances",
+                "Only geometric formulas"
+            ],
+
+            q10: [
+                "9 cm³",
+                "12 cm³",
+                "24 cm³",
+                "48 cm³"
+            ]
+
+        };
+
+
+
+        /* =========================================
+           CHECK MAIN QUIZ
+        ========================================= */
+
+        function checkQuiz() {
+
+            let score = 0;
+
+            let wrong = [];
+
+
+            for (let i = 1; i <= 10; i++) {
+
+                let questionName = "q" + i;
+
+                let selected = document.querySelector(
+                    'input[name="' + questionName + '"]:checked'
+                );
+
+
+                if (
+                    selected &&
+                    selected.value === correctAnswers[questionName]
+                ) {
+
+                    score++;
+
+                } else {
+
+                    wrong.push(questionName);
+
+                }
+
+            }
+
+
+
+            /* SHOW RESULT */
+
+            document
+                .getElementById("result")
+                .classList.remove("hidden");
+
+
+            document
+                .getElementById("score")
+                .textContent =
+                "Your Score: " + score + " / 10";
+
+
+
+            /* MESSAGE */
+
+            if (score === 10) {
+
+                document
+                    .getElementById("resultMessage")
+                    .textContent =
+                    "🎉 Perfect! You got everything correct!";
+
+            } else {
+
+                document
+                    .getElementById("resultMessage")
+                    .textContent =
+                    "Review your mistakes and retake the incorrect questions.";
+
+            }
+
+
+
+            /* WRONG NUMBERS */
+
+            let wrongContainer =
+                document.getElementById("wrongQuestions");
+
+
+            wrongContainer.innerHTML = "";
+
+
+
+            if (wrong.length > 0) {
+
+                wrongContainer.innerHTML =
+                    "<strong>Questions to retake:</strong><br>";
+
+
+                wrong.forEach(function(question) {
+
+                    let number =
+                        question.replace("q", "");
+
+
+                    wrongContainer.innerHTML +=
+                        '<span class="wrong-number">' +
+                        "Question " +
+                        number +
+                        "</span>";
+
+                });
+
+
+                createRetakeQuiz(wrong);
+
+            } else {
+
+                document
+                    .getElementById("retakeSection")
+                    .classList.add("hidden");
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           CREATE RETAKE QUIZ
+        ========================================= */
+
+        function createRetakeQuiz(wrongQuestions) {
+
+            let retakeForm =
+                document.getElementById("retakeForm");
+
+
+            retakeForm.innerHTML = "";
+
+
+            wrongQuestions.forEach(function(questionName) {
+
+                let number =
+                    questionName.replace("q", "");
+
+
+                let questionHTML =
+                    '<div class="retake-question">';
+
+
+                questionHTML +=
+                    "<h3>" +
+                    number +
+                    ". " +
+                    questions[questionName] +
+                    "</h3>";
+
+
+
+                choices[questionName].forEach(
+                    function(choice, index) {
+
+                        let letter =
+                            String.fromCharCode(65 + index);
+
+
+                        questionHTML +=
+                            '<label class="choice">' +
+
+                            '<input type="radio" ' +
+                            'name="retake_' +
+                            questionName +
+                            '" ' +
+                            'value="' +
+                            letter +
+                            '">' +
+
+                            letter +
+                            ". " +
+                            choice +
+
+                            "</label>";
+
+                    }
+                );
+
+
+                questionHTML += "</div>";
+
+
+                retakeForm.innerHTML +=
+                    questionHTML;
+
+            });
+
+
+
+            document
+                .getElementById("retakeSection")
+                .classList.remove("hidden");
+
+
+            document
+                .getElementById("retakeSection")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        }
+
+
+
+        /* =========================================
+           CHECK RETAKE
+        ========================================= */
+
+        function checkRetake() {
+
+            let retakeQuestions =
+                document.querySelectorAll(
+                    ".retake-question"
+                );
+
+
+            let retakeScore = 0;
+
+            let stillWrong = [];
+
+
+
+            retakeQuestions.forEach(
+                function(questionElement) {
+
+
+                    let radio =
+                        questionElement.querySelector(
+                            'input[type="radio"]:checked'
+                        );
+
+
+                    if (!radio) {
+
+                        let title =
+                            questionElement.querySelector("h3");
+
+                        let number =
+                            title.textContent.split(".")[0];
+
+                        stillWrong.push(number);
+
+                        return;
+
+                    }
+
+
+                    let questionName =
+                        radio.name.replace(
+                            "retake_",
+                            ""
+                        );
+
+
+                    if (
+                        radio.value ===
+                        correctAnswers[questionName]
+                    ) {
+
+                        retakeScore++;
+
+                    } else {
+
+                        stillWrong.push(
+                            questionName.replace("q", "")
+                        );
+
+                    }
+
+                }
+            );
+
+
+
+            let total =
+                retakeQuestions.length;
+
+
+            let result =
+                document.getElementById(
+                    "retakeResult"
+                );
+
+
+
+            /* ALL CORRECT */
+
+            if (
+                retakeScore === total &&
+                total > 0
+            ) {
+
+                result.innerHTML =
+                    "<h3>🎉 Great job!</h3>" +
+
+                    "<p>" +
+                    "You corrected all of your mistakes!" +
+                    "</p>" +
+
+                    "<p><strong>" +
+                    "Retake Score: " +
+                    retakeScore +
+                    " / " +
+                    total +
+                    "</strong></p>";
+
+
+
+                /* Hide retake form */
+
+                document
+                    .getElementById("retakeForm")
+                    .innerHTML = "";
+
+
+
+            } else {
+
+
+                result.innerHTML =
+                    "<h3>Keep practicing! 💪</h3>" +
+
+                    "<p>" +
+                    "Retake Score: " +
+                    retakeScore +
+                    " / " +
+                    total +
+                    "</p>" +
+
+                    "<p>" +
+                    "Still incorrect: " +
+                    stillWrong
+                        .map(function(number) {
+                            return "Question " + number;
+                        })
+                        .join(", ") +
+                    "</p>";
+
+
+                /*
+                    Show ONLY the questions
+                    that are still incorrect
+                */
+
+                let remainingQuestions =
+                    stillWrong.map(function(number) {
+                        return "q" + number;
+                    });
+
+
+                if (remainingQuestions.length > 0) {
+
+                    createRetakeQuiz(
+                        remainingQuestions
+                    );
+
+                } else {
+
+                    document
+                        .getElementById("retakeForm")
+                        .innerHTML = "";
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
